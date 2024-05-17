@@ -1,22 +1,24 @@
 package com.appian;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import com.appian.AppianSelectors;
-
-import java.time.Duration;
+import static com.appian.GenerateRandomString.generateRandomString;
 
 public class CreateAssetTest extends SetUpTests{
-    AppianSelectors selector = new AppianSelectors(driver);
 
     @Test
     public void createAnAssetTest() {
-        WebElement assetManagementTab = selector.getAssetManagementTab();
-        assetManagementTab.click();
+        String serialNum = generateRandomString();
+
+        selector.getAssetManagementTab().click();
+        selector.getAddNewAssetButton().click();
+        selector.getNewAssetWorkstation().click();
+        selector.getNewAssetNameInput().sendKeys("Macbook Pro 123");
+        selector.getNewAssetSerialNumInput().sendKeys(serialNum);
+        selector.getNewAssetSubmitButton().click();
+
+        Assert.assertNotNull(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='" + serialNum + "']"))));
     }
 }

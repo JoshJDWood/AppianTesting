@@ -18,6 +18,7 @@ import java.time.Duration;
 public class SetUpTests {
     public WebDriver driver;
     public WebDriverWait wait;
+    AppianSelectors selector;
 
     @BeforeClass
     public void setUp() {
@@ -33,12 +34,13 @@ public class SetUpTests {
 
         // Initialize the ChromeDriver with the custom profile
         driver = new ChromeDriver(options);
-        //wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(120));
         driver.manage().window().maximize();
+        selector = new AppianSelectors(driver, wait);
 
         driver.get("https://us.appian.community/suite/sites/w2398ais-acme-it-central");
 
-        //sign in
+        //sign in (DO NOT DELETE!!!!)
 //        WebElement usernameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("okta-signin-username")));
 //        WebElement passwordField = driver.findElement(By.id("okta-signin-password"));
 //        WebElement signInButton = driver.findElement(By.id("okta-signin-submit"));
@@ -50,8 +52,8 @@ public class SetUpTests {
         //break point to add sms
     }
 
-//    @AfterClass
-//    public void tearDown() {
-//        driver.quit();
-//    }
+    @AfterClass
+    public void tearDown() {
+        driver.quit();
+    }
 }
